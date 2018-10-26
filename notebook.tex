@@ -1,0 +1,570 @@
+
+
+
+
+    
+\documentclass[11pt]{article}
+    
+    \usepackage{parskip}
+    \setcounter{secnumdepth}{0} %Suppress section numbers
+    \usepackage[breakable]{tcolorbox}
+    \tcbset{nobeforeafter}
+    \usepackage{needspace}
+    \usepackage{minted}
+    \usemintedstyle{jupyter_python}
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    \let\Oldtex\TeX     % provide compatibility with nbconvert <= 5.3.1
+    \let\Oldlatex\LaTeX % pre-included in nbconvert > 5.3.1 so redundant
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{Assignment 1}
+    
+    
+    
+% Pygments definitions
+    
+    \makeatletter
+    \newcommand*\@iflatexlater{\@ifl@t@r\fmtversion}
+    \@iflatexlater{2016/03/01}{
+	    \newcommand{\wordboundary}{4095}}{
+	    \newcommand{\wordboundary}{255}}
+    \makeatother
+
+    \newif\ifcode
+    \codefalse
+    \definecolor{Grey}{rgb}{0.40,0.40,0.40}
+    %If using XeLaTeX, use magic to not highlight . operators with purple.
+    \ifdefined\XeTeXcharclass
+    \XeTeXinterchartokenstate = 1
+    \newXeTeXintercharclass \mycharclassGrey
+    \XeTeXcharclass `. \mycharclassGrey
+    \XeTeXinterchartoks 0 \mycharclassGrey   = {\bgroup\ifcode\color{Grey}\else\fi}
+
+    \XeTeXinterchartoks \wordboundary \mycharclassGrey = {\bgroup\ifcode\color{Grey}\else\fi}
+
+    \XeTeXinterchartoks \mycharclassGrey 0   = {\egroup}
+    \XeTeXinterchartoks \mycharclassGrey \wordboundary = {\egroup}
+    \fi %end magical operator highlighting
+    %End Reconfigured Pygments
+    
+   
+    % Exact colors from NB
+    \definecolor{incolor}{HTML}{303F9F}
+    \definecolor{outcolor}{HTML}{D84315}
+    \definecolor{cellborder}{HTML}{CFCFCF}
+    \definecolor{cellbackground}{HTML}{F7F7F7}
+
+    % needed definitions
+    \newif\ifleftmargins
+    \newlength{\promptlength}
+
+    % cell style settings
+        \leftmarginsfalse
+
+    
+    % prompt
+    \newcommand{\prompt}[3]{
+        \needspace{1.1cm}
+        \settowidth{\promptlength}{ #1 [#3] }
+        \ifleftmargins\hspace{-\promptlength}\hspace{-5pt}\fi
+        {\color{#2}#1 [#3]:}
+        \ifleftmargins\vspace{-2.7ex}\fi
+    }
+    
+    
+    % environments
+    \newenvironment{OutVerbatim}{\VerbatimEnvironment%
+        \begin{tcolorbox}[breakable, boxrule=.5pt, size=fbox, pad at break*=1mm, opacityfill=0]
+            \begin{Verbatim}
+            }{
+            \end{Verbatim}
+        \end{tcolorbox}
+    }
+    
+    %Updated MathJax Compatibility (if future behaviour of the notebook changes this may be removed)
+    \renewcommand{\TeX}{\ifmmode \textrm{\Oldtex} \else \textbackslash TeX \fi}
+    \renewcommand{\LaTeX}{\ifmmode \Oldlatex \else \textbackslash LaTeX \fi}
+    
+    % Header Adjustments
+    \renewcommand{\paragraph}{\textbf}
+    \renewcommand{\subparagraph}[1]{\textit{\textbf{#1}}}
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    \geometry{verbose,tmargin=.5in,bmargin=.7in,lmargin=.5in,rmargin=.5in}
+    
+
+    \begin{document}
+    
+    
+    
+    
+    
+
+    
+    \hypertarget{assignment-1}{%
+\section{Assignment 1}\label{assignment-1}}
+
+    
+\prompt{In}{incolor}{3}
+\codetrue
+\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm, colback=cellbackground, colframe=cellborder]
+\begin{minted}[breaklines=True]{ipython3}
+import sympy as sym 
+import sympy.vector
+from sympy import Derivative, symbols, cos, sin, simplify, sqrt, Matrix
+from sympy.physics.mechanics import *
+init_vprinting()
+\end{minted}
+\end{tcolorbox}
+\codefalse
+
+    
+\prompt{In}{incolor}{4}
+\codetrue
+\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm, colback=cellbackground, colframe=cellborder]
+\begin{minted}[breaklines=True]{ipython3}
+theta, beta, gamma, theta_M = symbols('theta beta gamma theta_M')
+\end{minted}
+\end{tcolorbox}
+\codefalse
+
+    \hypertarget{question-1}{%
+\subsection{Question 1}\label{question-1}}
+
+\hypertarget{b}{%
+\subsubsection{b)}\label{b}}
+
+Let the variables with ``M'' subscripts denote quantities in the moving
+frame.
+
+\(dN = n(\theta, \phi) d\Omega\)
+
+\(dN_M = n_M(\theta_M, \phi_M) d\Omega_M\)
+
+Where:
+
+\(d\Omega = \sin(\theta) d\theta d\phi\)
+
+\(d\Omega_M = \sin(\theta_M) d\theta_M d\phi_M\)
+
+\(\theta\) is the angle light makes with the x-axis in the stationary
+frame.
+
+\(\theta_M\) is the angle light makes with the x-axis in the moving
+frame.
+
+    \hypertarget{here-is-what-we-know}{%
+\paragraph{Here is what we know:}\label{here-is-what-we-know}}
+
+\(n(\theta, \phi) = Constant\) \(\because\) Stars are isotropic in
+stationary frame
+
+\(N = N_M\) \(\because\) Total amount of start seen by both observers
+have to be the same.
+
+\(\therefore dN = dN_M\)
+
+We define \(\theta\) and \(\theta_M\) to be the polar angle relative to
+the \(x\) and \(x_M\) axis, respectively. The azimuthal angle \(\phi\)
+is in the stationary \(yz\)-plane, and \(\phi_M\) is in the moving
+\(y_Mz_M\)-plane. As the moving observer is moving in the \(\hat{x}\)
+direction, there will be contraction along the \(\hat{x}\) direction;
+therefore, \(\theta \neq \theta_M\). The \(yz\)-plane is unaffected,
+thus \(\phi = \phi_M\).
+
+\(\phi = \phi_M \Rightarrow d\phi = d\phi_M\)
+
+    Taking the integral of \(dN\) to find \(N\):
+
+\(N = \int n(\theta, \phi) d\Omega = n(\theta, \phi) \int d\Omega = n(\theta, \phi) \int_0^{2\pi} \int_0^{\pi} \sin(\theta) d\theta d\phi = 4\pi n(\theta, \phi)\)
+
+Now we find \(n_M(\theta_M, \phi_M)\):
+
+\(n_M(\theta_M, \phi_M) = \frac{dN_M}{d\Omega_M} = \frac{dN_M}{d\Omega} \frac{d\Omega}{d\Omega_M} = \frac{dN}{d\Omega} \frac{d\Omega}{d\Omega_M} = \frac{N}{4\pi} \frac{d\Omega}{d\Omega_M} = \frac{N}{4\pi} \frac{d\Omega}{d\phi} \frac{d\phi_M}{d\Omega_M} = \frac{N}{4\pi} \frac{\sin(\theta) d\theta}{\sin(\theta_M)d\theta_M}\)
+
+    We know:
+
+\(\cos(\theta_M) = \frac{\cos(\theta) - \beta}{1 - \beta \cos(\theta)}\)
+
+\(\therefore \frac{d}{d \theta_M} \cos(\theta_M) = \frac{d}{d \theta} \frac{\cos(\theta) - \beta}{1 - \beta \cos(\theta)}\)
+
+However, this is what the resting observer calculates for the moving
+observer in the basis of the rest frame.
+
+Shifting to the moving frame, the angle of light recieved by the moving
+observer:
+
+\(\cos(\theta) = \frac{\cos(\theta_M) - \beta}{1 - \beta \cos(\theta_M)}\)
+
+\(\therefore \frac{d}{d \theta} \cos(\theta) = \frac{d}{d \theta_M} \frac{\cos(\theta_M) - \beta}{1 - \beta \cos(\theta_M)}\)
+
+    \hypertarget{find-the-derivatives}{%
+\paragraph{Find the Derivatives}\label{find-the-derivatives}}
+
+\(\frac{d}{d \theta} \cos(\theta) =\)
+
+    
+\prompt{In}{incolor}{5}
+\codetrue
+\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm, colback=cellbackground, colframe=cellborder]
+\begin{minted}[breaklines=True]{ipython3}
+xmove = cos(theta)
+dxmove = Derivative(xmove, theta).doit()
+dxmove
+\end{minted}
+\end{tcolorbox}
+\codefalse
+ 
+            
+\prompt{Out}{outcolor}{5}
+    
+    $$- \operatorname{sin}\left(\theta\right)$$
+
+    
+
+    \(\frac{d}{d\theta} \frac{\cos(\theta) - \beta}{1 - \beta \cos(\theta)} =\)
+
+    
+\prompt{In}{incolor}{6}
+\codetrue
+\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm, colback=cellbackground, colframe=cellborder]
+\begin{minted}[breaklines=True]{ipython3}
+xstat = (cos(theta_M) - beta)/(1 - beta*cos(theta_M))
+dxstat = Derivative(xstat, theta_M).doit()
+dxstat.simplify() 
+\end{minted}
+\end{tcolorbox}
+\codefalse
+ 
+            
+\prompt{Out}{outcolor}{6}
+    
+    $$\frac{\left(\beta^{2} - 1\right) \operatorname{sin}\left(\theta_{M}\right)}{\left(\beta \operatorname{cos}\left(\theta_{M}\right) - 1\right)^{2}}$$
+
+    
+
+    \$ \therefore \sin(\theta) d\theta =
+\frac{1 - \beta^2 }{(\beta\cos(\theta_M) - 1)^2} \sin(\theta\_M)
+d\theta\_M \Rightarrow
+\frac{\sin(\theta) d\theta}{\sin(\theta_M) d\theta_M} =
+\frac{1 - \beta^2 }{(1 - \beta\cos(\theta_M))^2} \$
+
+    Combining this with what we got for \(n_M(\theta_M, \phi_M)\):
+
+\(n_M(\theta_M, \phi_M) = \frac{N}{4\pi} \frac{d\Omega}{d\phi} \frac{d\phi_M}{d\Omega_M} = \frac{\sin(\theta) d\theta}{\sin(\theta_M)d\theta_M}\)
+
+We have
+
+\(n_M(\theta_M, \phi_M) = \frac{N}{4\pi} \frac{d\Omega}{d\phi} \frac{d\phi_M}{d\Omega_M} = \frac{N}{4\pi} \frac{\sin(\theta) d\theta}{\sin(\theta_M)d\theta_M} = \frac{N}{4\pi} \left[ \frac{1 - \beta^2 }{(1-\beta\cos(\theta_M))^2} \right]\)
+
+    \hypertarget{c}{%
+\subsubsection{c)}\label{c}}
+
+As \(\beta \rightarrow 1\):
+
+\(1-\beta^2 \rightarrow 0\)
+
+\(1-\beta \cos(\theta_M) \rightarrow 1-\cos(\theta_M)\)
+
+\(\therefore \frac{N}{4\pi} \left[ \frac{1 - \beta^2 }{(1-\beta\cos(\theta))^2} \right] \rightarrow 0\)
+
+    This means all the stars in the sky has disappeared. If we look at the
+\(1-\beta \cos(\theta)\) term we can get a sense of where they went.
+\(1-\beta \cos(\theta)\) has a minimum value of \(-1\) at \(\theta = 0\)
+and a maximum value of \(1\) at \(\theta = \pi\), so when
+\(\theta = 0\), \(n_m(\theta_M, \phi_M)\) goes to infinity. This tells
+us all the stars are ``moving'' behind the moving observer as the moving
+observer approaches the speed of light. At the the speed of light, all
+the stars have condensed into a single point behind the moving observer.
+
+    \hypertarget{question-2}{%
+\subsection{Question 2}\label{question-2}}
+
+    
+\prompt{In}{incolor}{4}
+\codetrue
+\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm, colback=cellbackground, colframe=cellborder]
+\begin{minted}[breaklines=True]{ipython3}
+c = symbols('c')
+
+C = sympy.vector.CoordSys3D('C')
+E1, E2, E3 = symbols('E1:4')
+E_vec = E1*C.i+E2*C.j+E3*C.k
+
+B1, B2, B3 = symbols('B1:4')
+
+v1, v2, v3 = symbols('v1:4')
+v_vec = v1*C.i+v2*C.j+v3*C.k
+v = sqrt(v1**2+v2**2+v3**2)
+\end{minted}
+\end{tcolorbox}
+\codefalse
+
+    Find out what this term looks like:
+
+\$ \vec{B'} = -\frac{\gamma}{c^2} (\vec{v} \times \vec{E}) \$
+
+    
+\prompt{In}{incolor}{7}
+\codetrue
+\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm, colback=cellbackground, colframe=cellborder]
+\begin{minted}[breaklines=True]{ipython3}
+B_cross = -gamma/c**2*v_vec.cross(E_vec)
+display(B_cross)
+\end{minted}
+\end{tcolorbox}
+\codefalse
+
+    $$(- \frac{\gamma \left(- E_{2} v_{3} + E_{3} v_{2}\right)}{c^{2}})\mathbf{\hat{i}_{C}} + (- \frac{\gamma \left(E_{1} v_{3} - E_{3} v_{1}\right)}{c^{2}})\mathbf{\hat{j}_{C}} + (- \frac{\gamma \left(- E_{1} v_{2} + E_{2} v_{1}\right)}{c^{2}})\mathbf{\hat{k}_{C}}$$
+
+    
+    Here we define the various tensors:
+
+\(F_{\mu \nu}\) (F) is the tensor for the electromagnetic field
+
+\(F_{\mu \nu 0}\) (F0) is the tensor for the electromagnetic field in a
+frame where \(\vec{B} = 0\)
+
+\(\Lambda_{\mu'}^{\mu}\) (Lam) is the tensor that transforms F to F'
+
+\$ F'\emph{\{\mu' \nu`\} = \Lambda\emph{\{\mu'\}\^{}\{\mu\}
+\Lambda}\{\nu'\}\^{}\{\nu\} F}\{\mu \nu\} \$
+
+    
+\prompt{In}{incolor}{13}
+\codetrue
+\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm, colback=cellbackground, colframe=cellborder]
+\begin{minted}[breaklines=True]{ipython3}
+F = Matrix([[0, E1, E2, E3], 
+            [-E1, 0, -c*B3, c*B2], 
+            [-E2, c*B3, 0, -c*B1], 
+            [-E3, -c*B2, c*B1, 0]])/c
+
+F0 = F.subs({B1:0, B2:0, B3:0})
+
+Lam = Matrix([[gamma, v1*gamma/c, v2*gamma/c, v3*gamma/c], 
+              [v1*gamma/c, 1+(gamma-1)*v1**2/v**2, (gamma-1)*v1*v2/v**2, (gamma-1)*v1*v3/v**2],
+              [gamma*v2/c, (gamma-1)*v2*v1/v**2, 1+(gamma-1)*v2**2/v**2, (gamma-1)*v2*v3/v**2],
+              [gamma*v3/c, (gamma-1)*v3*v1/v**2, (gamma-1)*v3*v2/v**2, 1+(gamma-1)*v3**2/v**2]])
+F, F0, Lam
+\end{minted}
+\end{tcolorbox}
+\codefalse
+ 
+            
+\prompt{Out}{outcolor}{13}
+    
+    $$\left ( \left[\begin{matrix}0 & \frac{E_{1}}{c} & \frac{E_{2}}{c} & \frac{E_{3}}{c}\\- \frac{E_{1}}{c} & 0 & - B_{3} & B_{2}\\- \frac{E_{2}}{c} & B_{3} & 0 & - B_{1}\\- \frac{E_{3}}{c} & - B_{2} & B_{1} & 0\end{matrix}\right], \quad \left[\begin{matrix}0 & \frac{E_{1}}{c} & \frac{E_{2}}{c} & \frac{E_{3}}{c}\\- \frac{E_{1}}{c} & 0 & 0 & 0\\- \frac{E_{2}}{c} & 0 & 0 & 0\\- \frac{E_{3}}{c} & 0 & 0 & 0\end{matrix}\right], \quad \left[\begin{matrix}\gamma & \frac{\gamma v_{1}}{c} & \frac{\gamma v_{2}}{c} & \frac{\gamma v_{3}}{c}\\\frac{\gamma v_{1}}{c} & \frac{v_{1}^{2} \left(\gamma - 1\right)}{v_{1}^{2} + v_{2}^{2} + v_{3}^{2}} + 1 & \frac{v_{1} v_{2} \left(\gamma - 1\right)}{v_{1}^{2} + v_{2}^{2} + v_{3}^{2}} & \frac{v_{1} v_{3} \left(\gamma - 1\right)}{v_{1}^{2} + v_{2}^{2} + v_{3}^{2}}\\\frac{\gamma v_{2}}{c} & \frac{v_{1} v_{2} \left(\gamma - 1\right)}{v_{1}^{2} + v_{2}^{2} + v_{3}^{2}} & \frac{v_{2}^{2} \left(\gamma - 1\right)}{v_{1}^{2} + v_{2}^{2} + v_{3}^{2}} + 1 & \frac{v_{2} v_{3} \left(\gamma - 1\right)}{v_{1}^{2} + v_{2}^{2} + v_{3}^{2}}\\\frac{\gamma v_{3}}{c} & \frac{v_{1} v_{3} \left(\gamma - 1\right)}{v_{1}^{2} + v_{2}^{2} + v_{3}^{2}} & \frac{v_{2} v_{3} \left(\gamma - 1\right)}{v_{1}^{2} + v_{2}^{2} + v_{3}^{2}} & \frac{v_{3}^{2} \left(\gamma - 1\right)}{v_{1}^{2} + v_{2}^{2} + v_{3}^{2}} + 1\end{matrix}\right]\right )$$
+
+    
+
+    Now we find \$ F'\emph{\{\mu' \nu`\} = \Lambda\emph{\{\mu'\}\^{}\{\mu\}
+\Lambda}\{\nu'\}\^{}\{\nu\} F}\{\mu \nu\} \$
+
+    
+\prompt{In}{incolor}{14}
+\codetrue
+\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm, colback=cellbackground, colframe=cellborder]
+\begin{minted}[breaklines=True]{ipython3}
+def f(i, j):
+    a = 0
+    for nu in range(4):
+        for mu in range(4):
+            a += Lam[i,mu]*Lam[nu,j]*F0[mu,nu]
+    return(a)
+
+F_prime = Matrix(4,4,f)
+
+for i in range(4):
+    for n in range(4):
+        F_prime[i, n] = F_prime[i, n].simplify()
+        
+display(F_prime)
+\end{minted}
+\end{tcolorbox}
+\codefalse
+
+    $$\left[\begin{matrix}0 & \frac{\gamma \left(c^{2} \left(E_{1} \left(v_{1}^{2} \left(\gamma - 1\right) + v_{1}^{2} + v_{2}^{2} + v_{3}^{2}\right) + E_{2} v_{1} v_{2} \left(\gamma - 1\right) + E_{3} v_{1} v_{3} \left(\gamma - 1\right)\right) - \gamma v_{1} \left(v_{1}^{2} + v_{2}^{2} + v_{3}^{2}\right) \left(E_{1} v_{1} + E_{2} v_{2} + E_{3} v_{3}\right)\right)}{c^{3} \left(v_{1}^{2} + v_{2}^{2} + v_{3}^{2}\right)} & \frac{\gamma \left(c^{2} \left(E_{1} v_{1} v_{2} \left(\gamma - 1\right) + E_{2} \left(v_{1}^{2} + v_{2}^{2} \left(\gamma - 1\right) + v_{2}^{2} + v_{3}^{2}\right) + E_{3} v_{2} v_{3} \left(\gamma - 1\right)\right) - \gamma v_{2} \left(v_{1}^{2} + v_{2}^{2} + v_{3}^{2}\right) \left(E_{1} v_{1} + E_{2} v_{2} + E_{3} v_{3}\right)\right)}{c^{3} \left(v_{1}^{2} + v_{2}^{2} + v_{3}^{2}\right)} & \frac{\gamma \left(c^{2} \left(E_{1} v_{1} v_{3} \left(\gamma - 1\right) + E_{2} v_{2} v_{3} \left(\gamma - 1\right) + E_{3} \left(v_{1}^{2} + v_{2}^{2} + v_{3}^{2} \left(\gamma - 1\right) + v_{3}^{2}\right)\right) - \gamma v_{3} \left(v_{1}^{2} + v_{2}^{2} + v_{3}^{2}\right) \left(E_{1} v_{1} + E_{2} v_{2} + E_{3} v_{3}\right)\right)}{c^{3} \left(v_{1}^{2} + v_{2}^{2} + v_{3}^{2}\right)}\\\frac{\gamma \left(- c^{2} \left(E_{1} \left(v_{1}^{2} \left(\gamma - 1\right) + v_{1}^{2} + v_{2}^{2} + v_{3}^{2}\right) + E_{2} v_{1} v_{2} \left(\gamma - 1\right) + E_{3} v_{1} v_{3} \left(\gamma - 1\right)\right) + \gamma v_{1} \left(v_{1}^{2} + v_{2}^{2} + v_{3}^{2}\right) \left(E_{1} v_{1} + E_{2} v_{2} + E_{3} v_{3}\right)\right)}{c^{3} \left(v_{1}^{2} + v_{2}^{2} + v_{3}^{2}\right)} & 0 & \frac{\gamma \left(- E_{1} v_{2} + E_{2} v_{1}\right)}{c^{2}} & \frac{\gamma \left(- E_{1} v_{3} + E_{3} v_{1}\right)}{c^{2}}\\\frac{\gamma \left(- c^{2} \left(E_{1} v_{1} v_{2} \left(\gamma - 1\right) + E_{2} \left(v_{1}^{2} + v_{2}^{2} \left(\gamma - 1\right) + v_{2}^{2} + v_{3}^{2}\right) + E_{3} v_{2} v_{3} \left(\gamma - 1\right)\right) + \gamma v_{2} \left(v_{1}^{2} + v_{2}^{2} + v_{3}^{2}\right) \left(E_{1} v_{1} + E_{2} v_{2} + E_{3} v_{3}\right)\right)}{c^{3} \left(v_{1}^{2} + v_{2}^{2} + v_{3}^{2}\right)} & \frac{\gamma \left(E_{1} v_{2} - E_{2} v_{1}\right)}{c^{2}} & 0 & \frac{\gamma \left(- E_{2} v_{3} + E_{3} v_{2}\right)}{c^{2}}\\\frac{\gamma \left(- c^{2} \left(E_{1} v_{1} v_{3} \left(\gamma - 1\right) + E_{2} v_{2} v_{3} \left(\gamma - 1\right) + E_{3} \left(v_{1}^{2} + v_{2}^{2} + v_{3}^{2} \left(\gamma - 1\right) + v_{3}^{2}\right)\right) + \gamma v_{3} \left(v_{1}^{2} + v_{2}^{2} + v_{3}^{2}\right) \left(E_{1} v_{1} + E_{2} v_{2} + E_{3} v_{3}\right)\right)}{c^{3} \left(v_{1}^{2} + v_{2}^{2} + v_{3}^{2}\right)} & \frac{\gamma \left(E_{1} v_{3} - E_{3} v_{1}\right)}{c^{2}} & \frac{\gamma \left(E_{2} v_{3} - E_{3} v_{2}\right)}{c^{2}} & 0\end{matrix}\right]$$
+
+    
+    Pick out the values for \(\vec{B}\):
+
+    
+\prompt{In}{incolor}{15}
+\codetrue
+\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm, colback=cellbackground, colframe=cellborder]
+\begin{minted}[breaklines=True]{ipython3}
+B_ten = (F_prime[3,2]*C.i - F_prime[3,1]*C.j + F_prime[2,1]*C.k).simplify()
+display(B_ten)
+\end{minted}
+\end{tcolorbox}
+\codefalse
+
+    $$(\frac{\gamma \left(E_{2} v_{3} - E_{3} v_{2}\right)}{c^{2}})\mathbf{\hat{i}_{C}} + (\frac{\gamma \left(- E_{1} v_{3} + E_{3} v_{1}\right)}{c^{2}})\mathbf{\hat{j}_{C}} + (\frac{\gamma \left(E_{1} v_{2} - E_{2} v_{1}\right)}{c^{2}})\mathbf{\hat{k}_{C}}$$
+
+    
+    Check if \$\vec{B'} + \frac{\gamma}{c^2} (\vec{v} \times \vec{E}) = 0 \$
+
+    
+\prompt{In}{incolor}{16}
+\codetrue
+\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm, colback=cellbackground, colframe=cellborder]
+\begin{minted}[breaklines=True]{ipython3}
+result = B_ten - B_cross 
+result.simplify()
+\end{minted}
+\end{tcolorbox}
+\codefalse
+ 
+            
+\prompt{Out}{outcolor}{16}
+    
+    $$\mathbf{\hat{0}}$$
+
+    
+
+    \(\vec{B'} + \frac{\gamma}{c^2} (\vec{v} \times \vec{E}) = 0\)
+
+\(\therefore \vec{B'} = -\frac{\gamma}{c^2} (\vec{v} \times \vec{E})\)
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
